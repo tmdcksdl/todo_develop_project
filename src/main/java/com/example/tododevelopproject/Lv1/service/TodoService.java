@@ -34,4 +34,11 @@ public class TodoService {
                 .map(TodoResponseDto::toDo)
                 .toList();
     }
+
+    public TodoResponseDto findById(Long id) {
+
+        Todo findTodo = todoRepository.findByIdOrElseThrow(id);
+
+        return new TodoResponseDto(findTodo.getId(), findTodo.getUsername(), findTodo.getTitle(), findTodo.getContents());
+    }
 }
