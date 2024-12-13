@@ -6,6 +6,8 @@ import com.example.tododevelopproject.Lv1.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class TodoService {
@@ -23,5 +25,13 @@ public class TodoService {
         Todo savedTodo = todoRepository.save(todo);
 
         return new TodoResponseDto(savedTodo.getId(), savedTodo.getUsername(), savedTodo.getTitle(), savedTodo.getContents());
+    }
+
+    public List<TodoResponseDto> findAll() {
+
+        return todoRepository.findAll()
+                .stream()
+                .map(TodoResponseDto::toDo)
+                .toList();
     }
 }
