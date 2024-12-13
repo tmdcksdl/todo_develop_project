@@ -1,5 +1,6 @@
 package com.example.tododevelopproject.Lv1.dto;
 
+import com.example.tododevelopproject.Lv1.entity.Todo;
 import lombok.Getter;
 
 @Getter
@@ -25,4 +26,7 @@ public class TodoResponseDto {
 
 
     // 기능
+    public static TodoResponseDto toDo(Todo todo) {
+        return new TodoResponseDto(todo.getId(), todo.getUsername(), todo.getTitle(), todo.getContents());
+    }
 }
