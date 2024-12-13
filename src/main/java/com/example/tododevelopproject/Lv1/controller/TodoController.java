@@ -38,4 +38,13 @@ public class TodoController {
 
         return new ResponseEntity<>(todoResponseDtoList, HttpStatus.OK);
     }
+
+    // ::: 선택 일정 조회 API
+    @GetMapping("/{id}")
+    public ResponseEntity<TodoResponseDto> findById(@PathVariable Long id) {
+
+        TodoResponseDto todoResponseDto = todoService.findById(id);
+
+        return new ResponseEntity<>(todoResponseDto, HttpStatus.OK);
+    }
 }
