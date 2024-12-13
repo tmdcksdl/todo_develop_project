@@ -1,8 +1,9 @@
 package com.example.tododevelopproject.Lv1.entity;
 
-
 import jakarta.persistence.*;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "todo")
 public class Todo extends BaseTodoEntity {
@@ -22,6 +23,13 @@ public class Todo extends BaseTodoEntity {
     private String contents;
 
     // 생성자
+    public Todo() {}
+
+    public Todo(String username, String title, String contents) {
+        this.username = username;
+        this.title = title;
+        this.contents = contents;
+    }
 
 
     // 기능
