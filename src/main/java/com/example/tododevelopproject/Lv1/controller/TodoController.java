@@ -61,5 +61,13 @@ public class TodoController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // ::: 선택 일정 삭제 API
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTodo(@PathVariable Long id) {
+
+        todoService.deleteTodo(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }
