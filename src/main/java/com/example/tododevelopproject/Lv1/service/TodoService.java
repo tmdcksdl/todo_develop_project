@@ -5,6 +5,7 @@ import com.example.tododevelopproject.Lv1.entity.Todo;
 import com.example.tododevelopproject.Lv1.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -40,5 +41,13 @@ public class TodoService {
         Todo findTodo = todoRepository.findByIdOrElseThrow(id);
 
         return new TodoResponseDto(findTodo.getId(), findTodo.getUsername(), findTodo.getTitle(), findTodo.getContents());
+    }
+
+    @Transactional
+    public void updateTodo(Long id, String title, String contents) {
+
+        Todo findTodo = todoRepository.findByIdOrElseThrow(id);
+
+        findTodo.updateTodo(title, contents);
     }
 }
