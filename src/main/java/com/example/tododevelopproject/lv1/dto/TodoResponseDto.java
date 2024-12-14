@@ -1,6 +1,6 @@
-package com.example.tododevelopproject.Lv1.dto;
+package com.example.tododevelopproject.lv1.dto;
 
-import com.example.tododevelopproject.Lv1.entity.Todo;
+import com.example.tododevelopproject.lv1.entity.Todo;
 import lombok.Getter;
 
 @Getter

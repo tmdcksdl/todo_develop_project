@@ -1,6 +1,6 @@
-package com.example.tododevelopproject.Lv1.repository;
+package com.example.tododevelopproject.lv1.repository;
 
-import com.example.tododevelopproject.Lv1.entity.Todo;
+import com.example.tododevelopproject.lv1.entity.Todo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;

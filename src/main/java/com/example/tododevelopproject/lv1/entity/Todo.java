@@ -1,4 +1,4 @@
-package com.example.tododevelopproject.Lv1.entity;
+package com.example.tododevelopproject.lv1.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.example.tododevelopproject.Lv1.dto;
+package com.example.tododevelopproject.lv1.dto;
 
 import lombok.Getter;
 
