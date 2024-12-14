@@ -2,6 +2,7 @@ package com.example.tododevelopproject.Lv1.controller;
 
 import com.example.tododevelopproject.Lv1.dto.TodoRequestDto;
 import com.example.tododevelopproject.Lv1.dto.TodoResponseDto;
+import com.example.tododevelopproject.Lv1.dto.UpdateRequestDto;
 import com.example.tododevelopproject.Lv1.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -47,4 +48,18 @@ public class TodoController {
 
         return new ResponseEntity<>(todoResponseDto, HttpStatus.OK);
     }
+
+    // ::: 선택 일정 수정 API
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> updateTodo(
+            @PathVariable Long id,
+            @RequestBody UpdateRequestDto requestDto
+    ) {
+
+        todoService.updateTodo(id, requestDto.getTitle(), requestDto.getContents());
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 }
