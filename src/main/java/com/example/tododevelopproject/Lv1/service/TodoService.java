@@ -50,4 +50,11 @@ public class TodoService {
 
         findTodo.updateTodo(title, contents);
     }
+
+    public void deleteTodo(Long id) {
+
+        Todo findTodo = todoRepository.findByIdOrElseThrow(id);
+
+        todoRepository.delete(findTodo);
+    }
 }
