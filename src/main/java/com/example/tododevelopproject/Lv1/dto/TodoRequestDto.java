@@ -19,6 +19,5 @@ public class TodoRequestDto {
         this.contents = contents;
     }
 
-
     // 기능
 }
