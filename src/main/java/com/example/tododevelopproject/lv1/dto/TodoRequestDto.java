@@ -10,10 +10,13 @@ public class TodoRequestDto {
 
     private final String contents;
 
+    private final Long memberId;
+
     // 생성자
-    public TodoRequestDto(String title, String contents) {
+    public TodoRequestDto(String title, String contents, Long memberId) {
         this.title = title;
         this.contents = contents;
+        this.memberId = memberId;
     }
 
     // 기능
