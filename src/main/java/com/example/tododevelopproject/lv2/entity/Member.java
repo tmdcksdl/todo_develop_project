@@ -30,4 +30,7 @@ public class Member extends BaseMemberEntity{
 
 
     // 기능
+    public void update(String email) {
+        this.email = email;
+    }
 }
