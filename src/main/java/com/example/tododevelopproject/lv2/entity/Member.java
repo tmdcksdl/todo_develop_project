@@ -22,10 +22,14 @@ public class Member extends BaseMemberEntity{
     @Email
     private String email;
 
+    @Column(nullable = false)
+    private String password;
+
     // 생성자
-    public Member(String username, String email) {
+    public Member(String username, String email, String password) {
         this.username = username;
         this.email = email;
+        this.password = password;
     }
 
 

@@ -21,9 +21,9 @@ public class MemberService {
 
     // 기능
     // ::: 회원 생성 서비스
-    public MemberResponseDto saveMember(String username, String email) {
+    public MemberResponseDto saveMember(String username, String email, String password) {
 
-        Member member = new Member(username, email);
+        Member member = new Member(username, email, password);
 
         Member savedMember = memberRepository.save(member);
 
@@ -49,18 +49,29 @@ public class MemberService {
 
     // ::: 선택 회원 수정 서비스
     @Transactional
-    public void updateMember(Long id, String email) {
+    public void updateMember(Long id, String email, String password) {
 
         Member findMember = memberRepository.findByIdOrElseThrow(id);
 
-        findMember.update(email);
+        if (password.equals(findMember.getPassword())) {
+            findMember.update(email);
+        } else {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+
     }
 
     // ::: 선택 회원 삭제 서비스
-    public void deleteMember(Long id) {
+    public void deleteMember(Long id, String password) {
 
         Member findMember = memberRepository.findByIdOrElseThrow(id);
 
-        memberRepository.delete(findMember);
+        if (password.equals(findMember.getPassword())) {
+            memberRepository.delete(findMember);
+        } else {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+
+
     }
 }

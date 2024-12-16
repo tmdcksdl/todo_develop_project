@@ -2,6 +2,7 @@ package com.example.tododevelopproject.lv2.controller;
 
 import com.example.tododevelopproject.lv2.dto.MemberRequestDto;
 import com.example.tododevelopproject.lv2.dto.MemberResponseDto;
+import com.example.tododevelopproject.lv2.dto.UpdateReqeustDto;
 import com.example.tododevelopproject.lv2.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,8 @@ public class MemberController {
 
         MemberResponseDto memberResponseDto = memberService.saveMember(
                 requestDto.getUsername(),
-                requestDto.getEmail()
+                requestDto.getEmail(),
+                requestDto.getPassword()
         );
 
         return new ResponseEntity<>(memberResponseDto, HttpStatus.CREATED);
@@ -55,19 +57,23 @@ public class MemberController {
     @PatchMapping("/{id}")
     public ResponseEntity<Void> updateMember(
             @PathVariable Long id,
-            @RequestBody MemberRequestDto requestDto
+            @RequestBody UpdateReqeustDto requestDto,
+            @RequestParam String password
     ) {
 
-        memberService.updateMember(id, requestDto.getEmail());
+        memberService.updateMember(id, requestDto.getEmail(), password);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // ::: 선택 회원 삭제 API
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMember(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteMember(
+            @PathVariable Long id,
+            @RequestParam String password
+    ) {
 
-        memberService.deleteMember(id);
+        memberService.deleteMember(id, password);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
