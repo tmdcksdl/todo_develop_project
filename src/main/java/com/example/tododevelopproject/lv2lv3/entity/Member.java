@@ -1,4 +1,4 @@
-package com.example.tododevelopproject.lv2.entity;
+package com.example.tododevelopproject.lv2lv3.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;

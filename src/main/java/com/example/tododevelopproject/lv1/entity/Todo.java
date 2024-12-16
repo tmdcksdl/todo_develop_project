@@ -1,6 +1,6 @@
 package com.example.tododevelopproject.lv1.entity;
 
-import com.example.tododevelopproject.lv2.entity.Member;
+import com.example.tododevelopproject.lv2lv3.entity.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 

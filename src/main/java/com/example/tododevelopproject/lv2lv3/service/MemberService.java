@@ -1,8 +1,8 @@
-package com.example.tododevelopproject.lv2.service;
+package com.example.tododevelopproject.lv2lv3.service;
 
-import com.example.tododevelopproject.lv2.dto.MemberResponseDto;
-import com.example.tododevelopproject.lv2.entity.Member;
-import com.example.tododevelopproject.lv2.repository.MemberRepository;
+import com.example.tododevelopproject.lv2lv3.dto.MemberResponseDto;
+import com.example.tododevelopproject.lv2lv3.entity.Member;
+import com.example.tododevelopproject.lv2lv3.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,9 +1,9 @@
-package com.example.tododevelopproject.lv2.controller;
+package com.example.tododevelopproject.lv2lv3.controller;
 
-import com.example.tododevelopproject.lv2.dto.MemberRequestDto;
-import com.example.tododevelopproject.lv2.dto.MemberResponseDto;
-import com.example.tododevelopproject.lv2.dto.UpdateReqeustDto;
-import com.example.tododevelopproject.lv2.service.MemberService;
+import com.example.tododevelopproject.lv2lv3.dto.MemberRequestDto;
+import com.example.tododevelopproject.lv2lv3.dto.MemberResponseDto;
+import com.example.tododevelopproject.lv2lv3.dto.UpdateReqeustDto;
+import com.example.tododevelopproject.lv2lv3.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.example.tododevelopproject.lv2.dto;
+package com.example.tododevelopproject.lv2lv3.dto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
-package com.example.tododevelopproject.lv2.dto;
+package com.example.tododevelopproject.lv2lv3.dto;
 
-import com.example.tododevelopproject.lv2.entity.Member;
+import com.example.tododevelopproject.lv2lv3.entity.Member;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
