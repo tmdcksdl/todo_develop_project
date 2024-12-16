@@ -55,4 +55,12 @@ public class MemberService {
 
         findMember.update(email);
     }
+
+    // ::: 선택 회원 삭제 서비스
+    public void deleteMember(Long id) {
+
+        Member findMember = memberRepository.findByIdOrElseThrow(id);
+
+        memberRepository.delete(findMember);
+    }
 }
