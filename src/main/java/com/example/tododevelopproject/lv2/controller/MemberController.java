@@ -51,4 +51,15 @@ public class MemberController {
         return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
     }
 
+    // ::: 선택 회원 수정 API
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> updateMember(
+            @PathVariable Long id,
+            @RequestBody MemberRequestDto requestDto
+    ) {
+
+        memberService.updateMember(id, requestDto.getEmail());
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
