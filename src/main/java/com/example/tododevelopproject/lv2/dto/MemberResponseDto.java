@@ -1,5 +1,6 @@
 package com.example.tododevelopproject.lv2.dto;
 
+import com.example.tododevelopproject.lv2.entity.Member;
 import lombok.Getter;
 
 @Getter
@@ -20,5 +21,7 @@ public class MemberResponseDto {
     }
 
     // 기능
-
+    public static MemberResponseDto memberDto(Member member) {
+        return new MemberResponseDto(member.getId(), member.getUsername(), member.getEmail());
+    }
 }
