@@ -62,4 +62,13 @@ public class MemberController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    // ::: 선택 회원 삭제 API
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteMember(@PathVariable Long id) {
+
+        memberService.deleteMember(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
