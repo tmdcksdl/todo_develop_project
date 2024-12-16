@@ -1,5 +1,6 @@
 package com.example.tododevelopproject.lv1.entity;
 
+import com.example.tododevelopproject.lv2.entity.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -14,23 +15,22 @@ public class Todo extends BaseTodoEntity {
     private Long id;
 
     @Column(nullable = false)
-    private String username;
-
-    @Column(nullable = false)
     private String title;
 
     @Column(nullable = false)
     private String contents;
 
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
     // 생성자
     public Todo() {}
 
-    public Todo(String username, String title, String contents) {
-        this.username = username;
+    public Todo(String title, String contents) {
         this.title = title;
         this.contents = contents;
     }
-
 
     // 기능
     public void updateTodo(String title, String contents) {
