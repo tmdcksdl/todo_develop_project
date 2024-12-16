@@ -1,6 +1,5 @@
 package com.example.tododevelopproject.lv2.dto;
 
-import com.example.tododevelopproject.lv2.entity.Member;
 import lombok.Getter;
 
 @Getter
