@@ -6,10 +6,9 @@ import com.example.tododevelopproject.lv2.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/members")
@@ -34,5 +33,11 @@ public class MemberController {
         return new ResponseEntity<>(memberResponseDto, HttpStatus.CREATED);
     }
 
+    // ::: 전체 회원 조회 API
+     @GetMapping
+     public ResponseEntity<List<MemberResponseDto>> findAll() {
+        List<MemberResponseDto> memberResponseDtoList = memberService.findAll();
 
+        return new ResponseEntity<>(memberResponseDtoList, HttpStatus.OK);
+    }
 }
