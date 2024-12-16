@@ -36,8 +36,19 @@ public class MemberController {
     // ::: 전체 회원 조회 API
      @GetMapping
      public ResponseEntity<List<MemberResponseDto>> findAll() {
+
         List<MemberResponseDto> memberResponseDtoList = memberService.findAll();
 
         return new ResponseEntity<>(memberResponseDtoList, HttpStatus.OK);
     }
+
+    // ::: 선택 회원 조회 API
+    @GetMapping("/{id}")
+    public ResponseEntity<MemberResponseDto> findById(@PathVariable Long id) {
+
+        MemberResponseDto memberResponseDto = memberService.findById(id);
+
+        return new ResponseEntity<>(memberResponseDto, HttpStatus.OK);
+    }
+
 }
