@@ -5,6 +5,7 @@ import com.example.tododevelopproject.lv2.entity.Member;
 import com.example.tododevelopproject.lv2.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -44,5 +45,14 @@ public class MemberService {
         Member findMember = memberRepository.findByIdOrElseThrow(id);
 
         return new MemberResponseDto(findMember.getId(), findMember.getUsername(), findMember.getEmail());
+    }
+
+    // ::: 선택 회원 수정 서비스
+    @Transactional
+    public void updateMember(Long id, String email) {
+
+        Member findMember = memberRepository.findByIdOrElseThrow(id);
+
+        findMember.update(email);
     }
 }
