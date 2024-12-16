@@ -6,6 +6,8 @@ import com.example.tododevelopproject.lv2.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -27,4 +29,11 @@ public class MemberService {
         return new MemberResponseDto(savedMember.getId(), savedMember.getUsername(), savedMember.getEmail());
     }
 
+    // ::: 전체 회원 조회 서비스
+    public List<MemberResponseDto> findAll() {
+        return memberRepository.findAll()
+                .stream()
+                .map(MemberResponseDto::memberDto)
+                .toList();
+    }
 }
