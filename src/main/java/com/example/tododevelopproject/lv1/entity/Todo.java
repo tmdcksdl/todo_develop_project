@@ -33,6 +33,10 @@ public class Todo extends BaseTodoEntity {
     }
 
     // 기능
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
     public void updateTodo(String title, String contents) {
         this.title = title;
         this.contents = contents;
