@@ -31,9 +31,18 @@ public class MemberService {
 
     // ::: 전체 회원 조회 서비스
     public List<MemberResponseDto> findAll() {
+
         return memberRepository.findAll()
                 .stream()
                 .map(MemberResponseDto::memberDto)
                 .toList();
+    }
+
+    // ::: 선택 회원 조회 서비스
+    public MemberResponseDto findById(Long id) {
+
+        Member findMember = memberRepository.findByIdOrElseThrow(id);
+
+        return new MemberResponseDto(findMember.getId(), findMember.getUsername(), findMember.getEmail());
     }
 }
