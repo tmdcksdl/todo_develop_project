@@ -23,7 +23,7 @@ public class MemberController {
 
     // 기능
     // ::: 회원 생성 API
-    @PostMapping
+    @PostMapping("/signup")
     public ResponseEntity<MemberResponseDto> saveMember(@RequestBody MemberRequestDto requestDto) {
 
         MemberResponseDto memberResponseDto = memberService.saveMember(
