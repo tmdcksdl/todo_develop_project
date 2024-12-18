@@ -1,25 +1,23 @@
-package com.example.tododevelopproject.lv1.dto;
+package com.example.tododevelopproject.lv7.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class TodoRequestDto {
+public class CreateCommentRequestDto {
 
     // 속성
-    @NotEmpty
-    @Size(max = 15, message = "Please limit it to 15 characters or fewer.")
-    private final String title;
-
-    @NotEmpty(message = "Contents cannot be empty.")
+    @NotEmpty(message = "댓글 내용을 입력해주세요.")
     private final String contents;
 
     @NotNull
     private final Long memberId;
+
+    @NotNull
+    private final Long todoId;
 
     // 생성자
 

@@ -3,6 +3,7 @@ package com.example.tododevelopproject.lv1.service;
 import com.example.tododevelopproject.lv1.dto.TodoResponseDto;
 import com.example.tododevelopproject.lv1.entity.Todo;
 import com.example.tododevelopproject.lv1.repository.TodoRepository;
+import com.example.tododevelopproject.lv2lv3.dto.MemberResponseDto;
 import com.example.tododevelopproject.lv2lv3.entity.Member;
 import com.example.tododevelopproject.lv2lv3.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,9 @@ public class TodoService {
 
         Todo savedTodo = todoRepository.save(todo);
 
-        return new TodoResponseDto(savedTodo.getId(), savedTodo.getTitle(), savedTodo.getContents());
+        MemberResponseDto memberResponseDto = new MemberResponseDto(savedTodo.getMember().getId(), savedTodo.getMember().getUsername(), savedTodo.getMember().getEmail());
+
+        return new TodoResponseDto(savedTodo.getId(), savedTodo.getTitle(), savedTodo.getContents(), memberResponseDto);
     }
 
     // ::: 전체 일정 조회 서비스
@@ -49,7 +52,9 @@ public class TodoService {
 
         Todo findTodo = todoRepository.findByIdOrElseThrow(id);
 
-        return new TodoResponseDto(findTodo.getId(), findTodo.getTitle(), findTodo.getContents());
+        MemberResponseDto memberResponseDto = new MemberResponseDto(findTodo.getMember().getId(), findTodo.getMember().getUsername(), findTodo.getMember().getEmail());
+
+        return new TodoResponseDto(findTodo.getId(), findTodo.getTitle(), findTodo.getContents(), memberResponseDto);
     }
 
     // ::: 선택 일정 수정 서비스
