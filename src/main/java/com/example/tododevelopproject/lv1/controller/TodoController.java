@@ -4,6 +4,7 @@ import com.example.tododevelopproject.lv1.dto.TodoRequestDto;
 import com.example.tododevelopproject.lv1.dto.TodoResponseDto;
 import com.example.tododevelopproject.lv1.dto.UpdateRequestDto;
 import com.example.tododevelopproject.lv1.service.TodoService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +26,13 @@ public class TodoController {
     // 기능
     // ::: 일정 생성 API
     @PostMapping
-    public ResponseEntity<TodoResponseDto> saveTodo(@RequestBody TodoRequestDto requestDto) {
+    public ResponseEntity<TodoResponseDto> saveTodo(@Valid @RequestBody TodoRequestDto requestDto) {
 
-        TodoResponseDto todoResponseDto = todoService.saveTodo(requestDto.getTitle(), requestDto.getContents(), requestDto.getMemberId());
+        TodoResponseDto todoResponseDto = todoService.saveTodo(
+                requestDto.getTitle(),
+                requestDto.getContents(),
+                requestDto.getMemberId()
+        );
 
         return new ResponseEntity<>(todoResponseDto, HttpStatus.CREATED);
     }
@@ -54,7 +59,7 @@ public class TodoController {
     @PatchMapping("/{id}")
     public ResponseEntity<Void> updateTodo(
             @PathVariable Long id,
-            @RequestBody UpdateRequestDto requestDto
+            @Valid @RequestBody UpdateRequestDto requestDto
     ) {
 
         todoService.updateTodo(id, requestDto.getTitle(), requestDto.getContents());

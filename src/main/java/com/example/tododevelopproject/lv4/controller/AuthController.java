@@ -5,6 +5,7 @@ import com.example.tododevelopproject.lv4.dto.LoginResponseDto;
 import com.example.tododevelopproject.lv4.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class AuthController {
     // ::: 로그인 기능 API
     @PostMapping("/session-login")
     public ResponseEntity<Void> login(
-            @ModelAttribute LoginRequestDto requestDto,
+            @Valid @ModelAttribute LoginRequestDto requestDto,
             HttpServletRequest request
     ) {
 

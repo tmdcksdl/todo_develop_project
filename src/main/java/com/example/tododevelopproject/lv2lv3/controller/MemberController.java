@@ -4,6 +4,7 @@ import com.example.tododevelopproject.lv2lv3.dto.MemberRequestDto;
 import com.example.tododevelopproject.lv2lv3.dto.MemberResponseDto;
 import com.example.tododevelopproject.lv2lv3.dto.UpdateReqeustDto;
 import com.example.tododevelopproject.lv2lv3.service.MemberService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class MemberController {
     // 기능
     // ::: 회원 생성 API
     @PostMapping("/signup")
-    public ResponseEntity<MemberResponseDto> saveMember(@RequestBody MemberRequestDto requestDto) {
+    public ResponseEntity<MemberResponseDto> saveMember(@Valid @RequestBody MemberRequestDto requestDto) {
 
         MemberResponseDto memberResponseDto = memberService.saveMember(
                 requestDto.getUsername(),
@@ -57,7 +58,7 @@ public class MemberController {
     @PatchMapping("/{id}")
     public ResponseEntity<Void> updateMember(
             @PathVariable Long id,
-            @RequestBody UpdateReqeustDto requestDto,
+            @Valid @RequestBody UpdateReqeustDto requestDto,
             @RequestParam String password
     ) {
 

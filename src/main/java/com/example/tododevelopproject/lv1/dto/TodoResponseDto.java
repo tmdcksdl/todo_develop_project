@@ -2,8 +2,10 @@ package com.example.tododevelopproject.lv1.dto;
 
 import com.example.tododevelopproject.lv1.entity.Todo;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public class TodoResponseDto {
 
     // 속성
@@ -14,13 +16,6 @@ public class TodoResponseDto {
     private final String contents;
 
     // 생성자
-
-    public TodoResponseDto(Long id, String title, String contents) {
-        this.id = id;
-        this.title = title;
-        this.contents = contents;
-    }
-
 
     // 기능
     public static TodoResponseDto toDo(Todo todo) {
