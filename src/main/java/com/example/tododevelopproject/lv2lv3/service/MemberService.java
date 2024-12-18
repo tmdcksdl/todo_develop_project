@@ -3,6 +3,7 @@ package com.example.tododevelopproject.lv2lv3.service;
 import com.example.tododevelopproject.lv2lv3.dto.MemberResponseDto;
 import com.example.tododevelopproject.lv2lv3.entity.Member;
 import com.example.tododevelopproject.lv2lv3.repository.MemberRepository;
+import com.example.tododevelopproject.lv6.config.PasswordEncoder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,7 @@ public class MemberService {
 
     // 속성
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     // 생성자
 
@@ -23,7 +25,9 @@ public class MemberService {
     // ::: 회원 생성 서비스
     public MemberResponseDto saveMember(String username, String email, String password) {
 
-        Member member = new Member(username, email, password);
+        String encodePassword = passwordEncoder.encode(password);
+
+        Member member = new Member(username, email, encodePassword);
 
         Member savedMember = memberRepository.save(member);
 
@@ -53,7 +57,7 @@ public class MemberService {
 
         Member findMember = memberRepository.findByIdOrElseThrow(id);
 
-        if (password.equals(findMember.getPassword())) {
+        if (passwordEncoder.matches(password, findMember.getPassword())) {
             findMember.update(email);
         } else {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
@@ -66,12 +70,10 @@ public class MemberService {
 
         Member findMember = memberRepository.findByIdOrElseThrow(id);
 
-        if (password.equals(findMember.getPassword())) {
+        if (passwordEncoder.matches(password, findMember.getPassword())) {
             memberRepository.delete(findMember);
         } else {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
-
-
     }
 }
