@@ -103,7 +103,7 @@ todo_id bigint FK
 {
     "title" : "일정 제목",
     "contents" : "일정 내용",
-    "memberId" : 회원의 고유 식별자 id
+    "memberId" : 1
 }
 ```
 
@@ -529,8 +529,8 @@ DELETE /todos/1?password=1234
 ```json
 {
     "contents" : "댓글의 내용",
-    "memberId" : 유저의 고유 식별자 id,
-    "todoId" : 일정의 고유 식별자 id
+    "memberId" : 1,
+    "todoId" : 1
 }
 ```
 
