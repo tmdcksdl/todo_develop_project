@@ -27,17 +27,13 @@ public class Todo extends BaseTodoEntity {
     // 생성자
     public Todo() {}
 
-    public Todo(String title, String contents) {
+    public Todo(String title, String contents, Member member) {
         this.title = title;
         this.contents = contents;
-    }
-
-    // 기능
-    public void setMember(Member member) {
         this.member = member;
     }
 
-
+    // 기능
     public void updateTodo(String title, String contents) {
         this.title = title;
         this.contents = contents;

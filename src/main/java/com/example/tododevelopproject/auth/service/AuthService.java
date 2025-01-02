@@ -1,14 +1,14 @@
 package com.example.tododevelopproject.auth.service;
 
-import com.example.tododevelopproject.member.entity.Member;
-import com.example.tododevelopproject.member.repository.MemberRepository;
 import com.example.tododevelopproject.auth.dto.LoginRequestDto;
 import com.example.tododevelopproject.auth.dto.LoginResponseDto;
 import com.example.tododevelopproject.common.config.PasswordEncoder;
+import com.example.tododevelopproject.common.exception.InvalidPasswordException;
+import com.example.tododevelopproject.common.exception.MemberNotFoundException;
+import com.example.tododevelopproject.member.entity.Member;
+import com.example.tododevelopproject.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -28,10 +28,10 @@ public class AuthService {
 
         Member foundMember = memberRepository.findByEmail(email)
                 .orElseThrow(() ->
-                        new ResponseStatusException(HttpStatus.UNAUTHORIZED, "해당 이메일을 가진 회원이 없습니다."));
+                        new MemberNotFoundException("해당 이메일을 가진 회원이 없습니다."));
 
         if (!passwordEncoder.matches(password, foundMember.getPassword())) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다.");
+            throw new InvalidPasswordException("비밀번호가 일치하지 않습니다.");
         }
 
         return new LoginResponseDto(foundMember);

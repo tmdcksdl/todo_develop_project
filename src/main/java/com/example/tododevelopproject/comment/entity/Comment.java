@@ -29,19 +29,13 @@ public class Comment extends BaseCommentEntity{
     private Todo todo;
 
     // 생성자
-    public Comment(String contents) {
+    public Comment(String contents, Member member, Todo todo) {
         this.contents = contents;
-    }
-
-    // 기능
-    public void setMember(Member member){
         this.member = member;
-    }
-
-    public void setTodo(Todo todo) {
         this.todo = todo;
     }
 
+    // 기능
     public void update(String contents) {
         this.contents = contents;
     }

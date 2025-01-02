@@ -1,21 +1,23 @@
 package com.example.tododevelopproject.comment.service;
 
-import com.example.tododevelopproject.todo.dto.TodoResponseDto;
-import com.example.tododevelopproject.todo.entity.Todo;
-import com.example.tododevelopproject.todo.repository.TodoRepository;
-import com.example.tododevelopproject.member.dto.MemberResponseDto;
-import com.example.tododevelopproject.member.entity.Member;
-import com.example.tododevelopproject.member.repository.MemberRepository;
-import com.example.tododevelopproject.common.config.PasswordEncoder;
 import com.example.tododevelopproject.comment.dto.CommentResponseDto;
 import com.example.tododevelopproject.comment.dto.CreateCommentResponseDto;
 import com.example.tododevelopproject.comment.entity.Comment;
 import com.example.tododevelopproject.comment.repository.CommentRepository;
+import com.example.tododevelopproject.common.config.PasswordEncoder;
+import com.example.tododevelopproject.common.exception.CommentNotFoundException;
+import com.example.tododevelopproject.common.exception.InvalidPasswordException;
+import com.example.tododevelopproject.common.exception.MemberNotFoundException;
+import com.example.tododevelopproject.common.exception.TodoNotFoundException;
+import com.example.tododevelopproject.member.dto.MemberResponseDto;
+import com.example.tododevelopproject.member.entity.Member;
+import com.example.tododevelopproject.member.repository.MemberRepository;
+import com.example.tododevelopproject.todo.dto.TodoResponseDto;
+import com.example.tododevelopproject.todo.entity.Todo;
+import com.example.tododevelopproject.todo.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -34,12 +36,12 @@ public class CommentService {
     // 기능
     public CreateCommentResponseDto saveComment(String contents, Long memberId, Long todoId) {
 
-        Member foundMember = memberRepository.findByIdOrElseThrow(memberId);
-        Todo foundTodo = todoRepository.findByIdOrElseThrow(todoId);
+        Member foundMember = memberRepository.findById(memberId).orElseThrow(() ->
+                new MemberNotFoundException("해당 Id를 가진 회원이 존재하지 않습니다."));
+        Todo foundTodo = todoRepository.findById(todoId).orElseThrow(() ->
+                new TodoNotFoundException("해당 Id를 가진 일정이 존재하지 않습니다."));
 
-        Comment comment = new Comment(contents);
-        comment.setMember(foundMember);
-        comment.setTodo(foundTodo);
+        Comment comment = new Comment(contents, foundMember, foundTodo);
 
         Comment savedComment = commentRepository.save(comment);
 
@@ -62,7 +64,7 @@ public class CommentService {
         List<Comment> comments = commentRepository.findByTodoId(todoId);
 
         if(comments.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 일정에 대한 댓글이 없습니다.");
+            throw new CommentNotFoundException("해당 Id에 대한 댓글이 없습니다.");
         }
 
         return comments.stream()
@@ -73,19 +75,25 @@ public class CommentService {
     @Transactional
     public void updateComment(Long id, String password, String contents) {
 
-        Comment foundComment = commentRepository.findByIdOrElseThrow(id);
+        Comment foundComment = commentRepository.findById(id).orElseThrow(() ->
+                new CommentNotFoundException("해당 Id에 대한 댓글이 없습니다."));
 
-        if (passwordEncoder.matches(password, foundComment.getMember().getPassword())) {
-            foundComment.update(contents);
+        if (!passwordEncoder.matches(password, foundComment.getMember().getPassword())) {
+            throw new InvalidPasswordException("비밀번호가 일치하지 않습니다.");
         }
+
+        foundComment.update(contents);
     }
 
     public void deleteComment(Long id, String password) {
 
-        Comment foundComment = commentRepository.findByIdOrElseThrow(id);
+        Comment foundComment = commentRepository.findById(id).orElseThrow(() ->
+                new CommentNotFoundException("해당 Id에 대한 댓글이 없습니다."));
 
-        if (passwordEncoder.matches(password, foundComment.getMember().getPassword())) {
-            commentRepository.delete(foundComment);
+        if (!passwordEncoder.matches(password, foundComment.getMember().getPassword())) {
+            throw new InvalidPasswordException("비밀번호가 일치하지 않습니다.");
         }
+
+        commentRepository.delete(foundComment);
     }
 }

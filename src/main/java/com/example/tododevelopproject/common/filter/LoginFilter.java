@@ -1,13 +1,17 @@
 package com.example.tododevelopproject.common.filter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.PatternMatchUtils;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 public class LoginFilter implements Filter {
@@ -35,7 +39,20 @@ public class LoginFilter implements Filter {
             HttpSession session = httpRequest.getSession(false);
 
             if (session == null || session.getAttribute("loginMember") == null) {
-                throw new RuntimeException("로그인 해주세요.");
+                httpResponse.setCharacterEncoding("UTF-8"); // UTF-8로 인코딩 설정
+                httpResponse.setContentType("application/json; charset=UTF-8"); // Content-Type 설정
+                httpResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+
+                Map<String, String> errorResponse = new HashMap<>();
+                errorResponse.put("errorCode", "401 UNAUTHORIZED");
+                errorResponse.put("error", "로그인하지 않은 상태입니다. 로그인 해주세요.");
+
+                ObjectMapper objectMapper = new ObjectMapper();
+                String jsonResponse = objectMapper.writeValueAsString(errorResponse);
+
+                httpResponse.getWriter().write(jsonResponse);
+
+                return;
             }
 
             // 로그인 성공 로직

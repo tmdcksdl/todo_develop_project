@@ -12,10 +12,10 @@ public class TodoRequestDto {
 
     // 속성
     @NotEmpty
-    @Size(max = 15, message = "Please limit it to 15 characters or fewer.")
+    @Size(max = 15, message = "제목은 15글자 이내로 작성해주세요.")
     private final String title;
 
-    @NotEmpty(message = "Contents cannot be empty.")
+    @NotEmpty(message = "내용을 작성해주세요.")
     private final String contents;
 
     @NotNull

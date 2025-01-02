@@ -1,5 +1,7 @@
 package com.example.tododevelopproject.todo.service;
 
+import com.example.tododevelopproject.common.exception.MemberNotFoundException;
+import com.example.tododevelopproject.common.exception.TodoNotFoundException;
 import com.example.tododevelopproject.todo.dto.TodoResponseDto;
 import com.example.tododevelopproject.todo.entity.Todo;
 import com.example.tododevelopproject.todo.repository.TodoRepository;
@@ -26,10 +28,10 @@ public class TodoService {
     // ::: 일정 생성 서비스
     public TodoResponseDto saveTodo(String title, String contents, Long memberId) {
 
-        Member findMember = memberRepository.findByIdOrElseThrow(memberId);
+        Member foundMember = memberRepository.findById(memberId).orElseThrow(() ->
+                new MemberNotFoundException("해당 Id를 가진 회원이 존재하지 않습니다."));
 
-        Todo todo = new Todo(title, contents);
-        todo.setMember(findMember);
+        Todo todo = new Todo(title, contents, foundMember);
 
         Todo savedTodo = todoRepository.save(todo);
 
@@ -50,27 +52,34 @@ public class TodoService {
     // ::: 선택 일정 조회 서비스
     public TodoResponseDto findById(Long id) {
 
-        Todo findTodo = todoRepository.findByIdOrElseThrow(id);
+        Todo foundTodo = todoRepository.findById(id).orElseThrow(() ->
+                new TodoNotFoundException("해당 Id를 가진 일정이 존재하지 않습니다."));
 
-        MemberResponseDto memberResponseDto = new MemberResponseDto(findTodo.getMember().getId(), findTodo.getMember().getUsername(), findTodo.getMember().getEmail());
+        MemberResponseDto memberResponseDto = new MemberResponseDto(
+                foundTodo.getMember().getId(),
+                foundTodo.getMember().getUsername(),
+                foundTodo.getMember().getEmail()
+        );
 
-        return new TodoResponseDto(findTodo.getId(), findTodo.getTitle(), findTodo.getContents(), memberResponseDto);
+        return new TodoResponseDto(foundTodo.getId(), foundTodo.getTitle(), foundTodo.getContents(), memberResponseDto);
     }
 
     // ::: 선택 일정 수정 서비스
     @Transactional
     public void updateTodo(Long id, String title, String contents) {
 
-        Todo findTodo = todoRepository.findByIdOrElseThrow(id);
+        Todo foundTodo = todoRepository.findById(id).orElseThrow(() ->
+                new TodoNotFoundException("해당 Id를 가진 일정이 존재하지 않습니다."));
 
-        findTodo.updateTodo(title, contents);
+        foundTodo.updateTodo(title, contents);
     }
 
     // ::: 선택 일정 삭제 서비스
     public void deleteTodo(Long id) {
 
-        Todo findTodo = todoRepository.findByIdOrElseThrow(id);
+        Todo foundTodo = todoRepository.findById(id).orElseThrow(() ->
+                new TodoNotFoundException("해당 Id를 가진 일정이 존재하지 않습니다."));
 
-        todoRepository.delete(findTodo);
+        todoRepository.delete(foundTodo);
     }
 }

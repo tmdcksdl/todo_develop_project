@@ -1,5 +1,7 @@
 package com.example.tododevelopproject.member.service;
 
+import com.example.tododevelopproject.common.exception.InvalidPasswordException;
+import com.example.tododevelopproject.common.exception.MemberNotFoundException;
 import com.example.tododevelopproject.member.dto.MemberResponseDto;
 import com.example.tododevelopproject.member.entity.Member;
 import com.example.tododevelopproject.member.repository.MemberRepository;
@@ -46,34 +48,36 @@ public class MemberService {
     // ::: 선택 회원 조회 서비스
     public MemberResponseDto findById(Long id) {
 
-        Member findMember = memberRepository.findByIdOrElseThrow(id);
+        Member foundMember = memberRepository.findById(id).orElseThrow(() ->
+                new MemberNotFoundException("해당 Id를 가진 회원이 존재하지 않습니다."));
 
-        return new MemberResponseDto(findMember.getId(), findMember.getUsername(), findMember.getEmail());
+        return new MemberResponseDto(foundMember.getId(), foundMember.getUsername(), foundMember.getEmail());
     }
 
     // ::: 선택 회원 수정 서비스
     @Transactional
     public void updateMember(Long id, String email, String password) {
 
-        Member findMember = memberRepository.findByIdOrElseThrow(id);
+        Member foundMember = memberRepository.findById(id).orElseThrow(() ->
+                new MemberNotFoundException("해당 Id를 가진 회원이 존재하지 않습니다."));
 
-        if (passwordEncoder.matches(password, findMember.getPassword())) {
-            findMember.update(email);
-        } else {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        if (!passwordEncoder.matches(password, foundMember.getPassword())) {
+            throw new InvalidPasswordException("비밀번호가 일치하지 않습니다.");
         }
 
+        foundMember.update(email);
     }
 
     // ::: 선택 회원 삭제 서비스
     public void deleteMember(Long id, String password) {
 
-        Member findMember = memberRepository.findByIdOrElseThrow(id);
+        Member foundMember = memberRepository.findById(id).orElseThrow(() ->
+                new MemberNotFoundException("해당 Id를 가진 회원이 존재하지 않습니다."));
 
-        if (passwordEncoder.matches(password, findMember.getPassword())) {
-            memberRepository.delete(findMember);
-        } else {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        if (passwordEncoder.matches(password, foundMember.getPassword())) {
+            throw new InvalidPasswordException("비밀번호가 일치하지 않습니다.");
         }
+
+        memberRepository.delete(foundMember);
     }
 }
